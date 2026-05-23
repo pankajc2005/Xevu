@@ -1,0 +1,24 @@
+# Xevu Project Instructions
+
+## Overview
+MCP server analyzing React codebases through behavioral user archetypes for UX feedback.
+
+## Rules
+- ES modules only — `import/export`, never `require()`
+- Use `.js` extension in relative imports (Node16 module resolution)
+- All types in `src/shared/types.ts` — single source of truth
+- All logging to stderr — stdout is MCP JSON-RPC transport
+- Pipeline stages return `Result<T, E>` — never throw exceptions
+- Read-only — never modify user code
+
+## Architecture
+6-stage pipeline: Scan → Parse → Domain → Flow → Archetypes → Report
+Each stage in `src/pipeline/<stage>/` returns `Result<T, E>`.
+
+## Commands
+- `npm run lint` — type check
+- `npm test` — run all tests
+- `npm run build` — compile TypeScript
+- `npm run format` — format with Prettier
+
+## See AGENTS.md for complete instructions.

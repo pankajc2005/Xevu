@@ -1,0 +1,27 @@
+You are working on Xevu, an MCP server that analyzes React codebases for UX issues.
+
+Project Rules:
+- TypeScript strict mode, ES modules only (import/export, not require)
+- Use .js extension in relative imports (Node16 resolution)
+- All domain types go in src/shared/types.ts — never define types inline
+- All logging goes to stderr — stdout is reserved for MCP JSON-RPC protocol
+- Pipeline stages return Result<T, E> from src/infra/result.ts — never throw
+- Xevu is read-only — it NEVER modifies user code
+- Run `npm test` to verify changes
+- Run `npm run lint` to type-check
+
+Architecture:
+- src/pipeline/scanner/ — File discovery and framework detection
+- src/pipeline/parser/ — Babel AST parsing of React files
+- src/pipeline/domain/ — App domain detection (ecommerce, saas, etc.)
+- src/pipeline/flow/ — User flow tracing across components
+- src/pipeline/archetypes/ — Behavioral archetype analysis
+- src/pipeline/report/ — Structured report generation
+- src/server.ts — MCP server with 4 tools
+- src/infra/ — Infrastructure (Result monad, errors, logger, cache)
+- src/shared/types.ts — ALL type definitions (single source of truth)
+
+Testing:
+- Framework: Vitest
+- Fixtures in tests/fixtures/ (sample React projects)
+- Always write tests for new features
