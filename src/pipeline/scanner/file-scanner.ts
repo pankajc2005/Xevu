@@ -11,12 +11,17 @@ import { ScanError } from '../../infra/errors.js';
 import { logger } from '../../infra/logger.js';
 import { DEFAULT_CONFIG, type XevuConfig } from '../../infra/config.js';
 import { classifyFile, normalizePath } from '../../shared/utils.js';
-import type { ScannedFile, ScannedProject, PackageJsonInfo, ProjectStructure } from '../../shared/types.js';
+import type {
+  ScannedFile,
+  ScannedProject,
+  PackageJsonInfo,
+  ProjectStructure,
+} from '../../shared/types.js';
 import { detectFramework } from './framework-detector.js';
 
 export async function scanProject(
   projectRoot: string,
-  config: XevuConfig = DEFAULT_CONFIG
+  config: XevuConfig = DEFAULT_CONFIG,
 ): Promise<Result<ScannedProject, ScanError>> {
   logger.info('Starting project scan', { projectRoot });
 
@@ -33,7 +38,9 @@ export async function scanProject(
   // 2. Read package.json
   const pkgResult = await readPackageJson(projectRoot);
   if (!pkgResult.ok) {
-    return err(new ScanError(`No package.json found in "${projectRoot}". Is this a Node.js project?`));
+    return err(
+      new ScanError(`No package.json found in "${projectRoot}". Is this a Node.js project?`),
+    );
   }
   const packageJson = pkgResult.value;
 
@@ -130,11 +137,20 @@ function detectStructure(files: ScannedFile[]): ProjectStructure {
 
 function findEntryFile(paths: string[]): string | null {
   const candidates = [
-    'src/index.tsx', 'src/index.ts', 'src/index.jsx', 'src/index.js',
-    'src/main.tsx', 'src/main.ts', 'src/main.jsx', 'src/main.js',
-    'src/App.tsx', 'src/App.jsx',
-    'pages/_app.tsx', 'pages/_app.jsx',
-    'app/layout.tsx', 'app/layout.jsx',
+    'src/index.tsx',
+    'src/index.ts',
+    'src/index.jsx',
+    'src/index.js',
+    'src/main.tsx',
+    'src/main.ts',
+    'src/main.jsx',
+    'src/main.js',
+    'src/App.tsx',
+    'src/App.jsx',
+    'pages/_app.tsx',
+    'pages/_app.jsx',
+    'app/layout.tsx',
+    'app/layout.jsx',
   ];
   return candidates.find((c) => paths.includes(c)) ?? null;
 }
