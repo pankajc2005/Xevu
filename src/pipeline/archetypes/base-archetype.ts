@@ -4,8 +4,15 @@
 // ============================================================
 
 import type {
-  ArchetypeName, DomainCategory, DomainContext, FlowGraph,
-  FlowNode, FlowEdge, Finding, FindingCategory, Severity,
+  ArchetypeName,
+  DomainCategory,
+  DomainContext,
+  FlowGraph,
+  FlowNode,
+  FlowEdge,
+  Finding,
+  FindingCategory,
+  Severity,
 } from '../../shared/types.js';
 import { makeId } from '../../shared/utils.js';
 
@@ -43,20 +50,17 @@ export abstract class BaseArchetype {
 
   protected abstract evaluateNode(
     node: FlowNode,
-    context: { domain: DomainContext; graph: FlowGraph }
+    context: { domain: DomainContext; graph: FlowGraph },
   ): Finding[];
 
   protected abstract evaluateEdge(
     edge: FlowEdge,
     from: FlowNode,
     to: FlowNode,
-    context: { domain: DomainContext; graph: FlowGraph }
+    context: { domain: DomainContext; graph: FlowGraph },
   ): Finding[];
 
-  protected abstract evaluateFlow(
-    graph: FlowGraph,
-    context: { domain: DomainContext }
-  ): Finding[];
+  protected abstract evaluateFlow(graph: FlowGraph, context: { domain: DomainContext }): Finding[];
 
   protected makeFinding(
     node: FlowNode,
@@ -65,7 +69,7 @@ export abstract class BaseArchetype {
     title: string,
     description: string,
     whyItMatters: string,
-    suggestion: string
+    suggestion: string,
   ): Finding {
     return {
       id: makeId(this.name, node.componentName, category),
