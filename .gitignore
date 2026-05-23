@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Lock files (include for open source)
+# package-lock.json is committed for reproducibility
+
+# Local instruction and planning files
+CLAUDE.md
+claude.md
+AGENTS.md
+agents.md
+implementation_plan.md
+xevu_build.md
+xevu_build_plan.md
+.windsurfrules 
+.prettierrc 
+.prettierignore
+.nvmrc 
+.editorconfig 
+.cursorrules 
+.clinerules
