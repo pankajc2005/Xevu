@@ -4,8 +4,12 @@
 // ============================================================
 
 import type {
-  StructuredReport, DomainContext, FlowGraph,
-  ArchetypeFindings, PipelineWarning, ArchetypeName,
+  StructuredReport,
+  DomainContext,
+  FlowGraph,
+  ArchetypeFindings,
+  PipelineWarning,
+  ArchetypeName,
 } from '../../shared/types.js';
 
 export function buildReport(input: {
@@ -21,24 +25,33 @@ export function buildReport(input: {
 
   const totalFindings = input.archetypes.reduce((sum, a) => sum + a.findings.length, 0);
   const criticalCount = input.archetypes.reduce(
-    (sum, a) => sum + a.findings.filter((f) => f.severity === 'critical').length, 0
+    (sum, a) => sum + a.findings.filter((f) => f.severity === 'critical').length,
+    0,
   );
   const majorCount = input.archetypes.reduce(
-    (sum, a) => sum + a.findings.filter((f) => f.severity === 'major').length, 0
+    (sum, a) => sum + a.findings.filter((f) => f.severity === 'major').length,
+    0,
   );
 
   const summaryParts: string[] = [];
-  summaryParts.push(`Detected domain: ${input.domain.primary} (${Math.round(input.domain.confidence * 100)}% confidence).`);
+  summaryParts.push(
+    `Detected domain: ${input.domain.primary} (${Math.round(input.domain.confidence * 100)}% confidence).`,
+  );
 
   if (input.flow) {
-    summaryParts.push(`Analyzed flow "${input.flow.name}" with ${input.flow.nodes.length} components.`);
+    summaryParts.push(
+      `Analyzed flow "${input.flow.name}" with ${input.flow.nodes.length} components.`,
+    );
   }
 
-  summaryParts.push(`Found ${totalFindings} UX issues: ${criticalCount} critical, ${majorCount} major.`);
+  summaryParts.push(
+    `Found ${totalFindings} UX issues: ${criticalCount} critical, ${majorCount} major.`,
+  );
 
   if (input.archetypes.length > 0) {
     const avgScore = Math.round(
-      input.archetypes.reduce((sum, a) => sum + (a.overallScore >= 0 ? a.overallScore : 0), 0) / input.archetypes.length
+      input.archetypes.reduce((sum, a) => sum + (a.overallScore >= 0 ? a.overallScore : 0), 0) /
+        input.archetypes.length,
     );
     summaryParts.push(`Average archetype score: ${avgScore}/100.`);
   }
