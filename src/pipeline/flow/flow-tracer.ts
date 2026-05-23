@@ -4,8 +4,14 @@
 // ============================================================
 
 import type {
-  FlowGraph, FlowNode, FlowEdge, ComponentNode, RouteNode,
-  ParsedProject, UserAction, FormField,
+  FlowGraph,
+  FlowNode,
+  FlowEdge,
+  ComponentNode,
+  RouteNode,
+  ParsedProject,
+  UserAction,
+  FormField,
 } from '../../shared/types.js';
 import { Result, ok, err } from '../../infra/result.js';
 import { FlowTracingError } from '../../infra/errors.js';
@@ -15,23 +21,23 @@ import { buildComponentGraph, type ComponentGraphNode } from './component-graph.
 
 export function traceFlow(
   parsed: ParsedProject,
-  flowTarget?: string
+  flowTarget?: string,
 ): Result<FlowGraph, FlowTracingError> {
   logger.info('Tracing flow', { target: flowTarget ?? 'all' });
 
   const componentGraph = buildComponentGraph(parsed.components, parsed.imports);
 
-  const relevantRoutes = flowTarget
-    ? matchRoutes(parsed.routes, flowTarget)
-    : parsed.routes;
+  const relevantRoutes = flowTarget ? matchRoutes(parsed.routes, flowTarget) : parsed.routes;
 
   if (relevantRoutes.length === 0 && flowTarget) {
     const matchedComponents = matchComponents(parsed.components, flowTarget);
     if (matchedComponents.length === 0) {
-      return err(new FlowTracingError(
-        `No routes or components found matching "${flowTarget}". ` +
-        `Available routes: ${parsed.routes.map((r) => r.path).join(', ')}`
-      ));
+      return err(
+        new FlowTracingError(
+          `No routes or components found matching "${flowTarget}". ` +
+            `Available routes: ${parsed.routes.map((r) => r.path).join(', ')}`,
+        ),
+      );
     }
     return ok(buildFlowFromComponents(matchedComponents, componentGraph, parsed, flowTarget));
   }
@@ -72,7 +78,7 @@ function buildFlowFromRoutes(
   routes: RouteNode[],
   graph: Map<string, ComponentGraphNode>,
   parsed: ParsedProject,
-  flowName: string
+  flowName: string,
 ): FlowGraph {
   const nodes: FlowNode[] = [];
   const edges: FlowEdge[] = [];
@@ -129,7 +135,7 @@ function buildFlowFromComponents(
   components: ComponentNode[],
   graph: Map<string, ComponentGraphNode>,
   parsed: ParsedProject,
-  flowName: string
+  flowName: string,
 ): FlowGraph {
   const nodes = components.map((c) => buildFlowNode(c, undefined, parsed));
   const edges: FlowEdge[] = [];
@@ -158,7 +164,11 @@ function buildFlowFromComponents(
   };
 }
 
-function buildFlowNode(component: ComponentNode, route: string | undefined, parsed: ParsedProject): FlowNode {
+function buildFlowNode(
+  component: ComponentNode,
+  route: string | undefined,
+  parsed: ParsedProject,
+): FlowNode {
   const userActions: UserAction[] = component.eventHandlers.map((handler) => ({
     type: handler === 'onSubmit' ? 'submit' : handler === 'onClick' ? 'click' : 'other',
     handler,
@@ -169,7 +179,9 @@ function buildFlowNode(component: ComponentNode, route: string | undefined, pars
   const formFields: FormField[] = [];
 
   const stateNames = component.stateVariables.map((s) => s.toLowerCase());
-  const hasLoading = stateNames.some((s) => s.includes('load') || s.includes('pending') || s.includes('fetch'));
+  const hasLoading = stateNames.some(
+    (s) => s.includes('load') || s.includes('pending') || s.includes('fetch'),
+  );
   const hasError = stateNames.some((s) => s.includes('error') || s.includes('err'));
   const hasEmpty = stateNames.some((s) => s.includes('empty') || s.includes('none'));
 

@@ -14,7 +14,7 @@ export interface ComponentGraphNode {
 
 export function buildComponentGraph(
   components: ComponentNode[],
-  imports: ImportEdge[]
+  imports: ImportEdge[],
 ): Map<string, ComponentGraphNode> {
   const graph = new Map<string, ComponentGraphNode>();
 
