@@ -3,7 +3,13 @@
 // PURPOSE: Orchestrate domain detection from all signal sources
 // ============================================================
 
-import type { DomainContext, DomainCategory, DomainSignal, ParsedProject, ScannedProject } from '../../shared/types.js';
+import type {
+  DomainContext,
+  DomainCategory,
+  DomainSignal,
+  ParsedProject,
+  ScannedProject,
+} from '../../shared/types.js';
 import { Result, ok } from '../../infra/result.js';
 import { logger } from '../../infra/logger.js';
 import { extractRouteSignals } from './signals/route-signals.js';
@@ -22,7 +28,7 @@ const SOURCE_WEIGHTS: Record<DomainSignal['source'], number> = {
 
 export function detectDomain(
   scanned: ScannedProject,
-  parsed: ParsedProject
+  parsed: ParsedProject,
 ): Result<DomainContext, Error> {
   const signals: DomainSignal[] = [
     ...extractRouteSignals(parsed.routes),
