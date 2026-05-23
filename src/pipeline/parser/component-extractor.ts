@@ -27,8 +27,11 @@ export function extractComponents(ast: ASTFile, filePath: string): ComponentNode
 
       if (init.type === 'CallExpression') {
         const callee = init.callee;
-        if (callee.type === 'MemberExpression' &&
-            callee.object.type === 'Identifier' && callee.object.name === 'React') {
+        if (
+          callee.type === 'MemberExpression' &&
+          callee.object.type === 'Identifier' &&
+          callee.object.name === 'React'
+        ) {
           if (callee.property.type === 'Identifier') {
             if (callee.property.name === 'memo') type = 'memo';
             if (callee.property.name === 'forwardRef') type = 'forwardRef';
@@ -41,7 +44,8 @@ export function extractComponents(ast: ASTFile, filePath: string): ComponentNode
         }
       }
 
-      if (funcNode.type !== 'ArrowFunctionExpression' && funcNode.type !== 'FunctionExpression') return;
+      if (funcNode.type !== 'ArrowFunctionExpression' && funcNode.type !== 'FunctionExpression')
+        return;
       if (!containsJSX(funcNode)) return;
 
       components.push(buildComponentNode(name, filePath, type, funcNode));
@@ -62,11 +66,17 @@ export function extractComponents(ast: ASTFile, filePath: string): ComponentNode
       const superClass = path.node.superClass;
 
       let isComponent = false;
-      if (superClass?.type === 'Identifier' && ['Component', 'PureComponent'].includes(superClass.name)) {
+      if (
+        superClass?.type === 'Identifier' &&
+        ['Component', 'PureComponent'].includes(superClass.name)
+      ) {
         isComponent = true;
       }
-      if (superClass?.type === 'MemberExpression' &&
-          superClass.object.type === 'Identifier' && superClass.object.name === 'React') {
+      if (
+        superClass?.type === 'MemberExpression' &&
+        superClass.object.type === 'Identifier' &&
+        superClass.object.name === 'React'
+      ) {
         isComponent = true;
       }
 
@@ -89,7 +99,7 @@ function buildComponentNode(
   name: string,
   filePath: string,
   type: ComponentNode['type'],
-  node: Node
+  node: Node,
 ): ComponentNode {
   const hooks: string[] = [];
   const stateVariables: string[] = [];
@@ -172,8 +182,12 @@ function containsJSX(node: Node): boolean {
   try {
     traverse(node as any, {
       noScope: true,
-      JSXElement() { found = true; },
-      JSXFragment() { found = true; },
+      JSXElement() {
+        found = true;
+      },
+      JSXFragment() {
+        found = true;
+      },
     });
   } catch {
     /* ignore traversal errors */

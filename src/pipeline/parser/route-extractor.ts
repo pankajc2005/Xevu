@@ -62,7 +62,8 @@ export function extractRoutes(ast: ASTFile, filePath: string): RouteNode[] {
     CallExpression(path: any) {
       const callee = path.node.callee;
       if (callee.type !== 'Identifier') return;
-      if (!['createBrowserRouter', 'createHashRouter', 'createMemoryRouter'].includes(callee.name)) return;
+      if (!['createBrowserRouter', 'createHashRouter', 'createMemoryRouter'].includes(callee.name))
+        return;
 
       const firstArg = path.node.arguments[0];
       if (firstArg?.type !== 'ArrayExpression') return;

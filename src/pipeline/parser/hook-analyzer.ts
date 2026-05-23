@@ -12,7 +12,7 @@ const traverse: any = (traverseModule as any).default ?? traverseModule;
 export function extractHooks(
   ast: ASTFile,
   filePath: string,
-  components: ComponentNode[]
+  components: ComponentNode[],
 ): HookUsage[] {
   const hooks: HookUsage[] = [];
   const componentNames = new Set(components.map((c) => c.name));

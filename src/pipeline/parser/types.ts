@@ -4,7 +4,13 @@
 // ============================================================
 
 export type {
-  ParsedProject, ComponentNode, RouteNode, HookUsage,
-  ExtractedText, ImportEdge, ParseError, PropDefinition,
+  ParsedProject,
+  ComponentNode,
+  RouteNode,
+  HookUsage,
+  ExtractedText,
+  ImportEdge,
+  ParseError,
+  PropDefinition,
   ConditionalRender,
 } from '../../shared/types.js';

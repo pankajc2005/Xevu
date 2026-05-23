@@ -10,10 +10,22 @@ import type { ExtractedText } from '../../shared/types.js';
 const traverse: any = (traverseModule as any).default ?? traverseModule;
 
 const UI_PROPS = new Set([
-  'label', 'placeholder', 'title', 'alt', 'aria-label',
-  'description', 'helperText', 'errorText', 'tooltip',
-  'buttonText', 'submitText', 'cancelText', 'confirmText',
-  'heading', 'subheading', 'caption',
+  'label',
+  'placeholder',
+  'title',
+  'alt',
+  'aria-label',
+  'description',
+  'helperText',
+  'errorText',
+  'tooltip',
+  'buttonText',
+  'submitText',
+  'cancelText',
+  'confirmText',
+  'heading',
+  'subheading',
+  'caption',
 ]);
 
 export function extractTexts(ast: ASTFile, filePath: string): ExtractedText[] {

@@ -9,7 +9,16 @@ import { Result, ok, err } from '../../infra/result.js';
 import { ParseFileError } from '../../infra/errors.js';
 import { logger } from '../../infra/logger.js';
 import { FileCache } from '../../infra/cache.js';
-import type { ScannedProject, ParsedProject, ParseError, ComponentNode, RouteNode, HookUsage, ExtractedText, ImportEdge } from '../../shared/types.js';
+import type {
+  ScannedProject,
+  ParsedProject,
+  ParseError,
+  ComponentNode,
+  RouteNode,
+  HookUsage,
+  ExtractedText,
+  ImportEdge,
+} from '../../shared/types.js';
 import { extractComponents } from './component-extractor.js';
 import { extractRoutes } from './route-extractor.js';
 import { extractTexts } from './text-extractor.js';
@@ -46,7 +55,7 @@ export async function parseProject(project: ScannedProject): Promise<Result<Pars
 
   // Only parse component, page, layout, and hook files
   const filesToParse = project.files.filter((f) =>
-    ['component', 'page', 'layout', 'hook', 'unknown'].includes(f.type)
+    ['component', 'page', 'layout', 'hook', 'unknown'].includes(f.type),
   );
 
   for (const file of filesToParse) {
