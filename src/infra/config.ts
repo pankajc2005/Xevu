@@ -35,5 +35,6 @@ export const DEFAULT_CONFIG: XevuConfig = {
     '**/__tests__/**',
     '**/__mocks__/**',
     '**/*.d.ts',
+    '**/*.config.{ts,js,mjs,cjs}',
   ],
 };
